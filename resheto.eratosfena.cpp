@@ -1,16 +1,20 @@
-#include <iostream>
-#include <vector>
 #include <cstdio>
+#include <cstdlib> 
 
 void sieveOfEratosthenes(int n) {
+    bool* isPrime = (bool*)calloc(n + 1, sizeof(bool));
+    if (!isPrime) {
+        printf("Ошибка выделения памяти!\n");
+        return;
+    }
 
-    std::vector<bool> isPrime(n + 1, true);
-    isPrime[0] = isPrime[1] = false; 
+    for (int i = 2; i <= n; ++i) {
+        isPrime[i] = true;
+    }
+
 
     for (int p = 2; p * p <= n; ++p) {
-
         if (isPrime[p]) {
-
             for (int multiple = p * p; multiple <= n; multiple += p) {
                 isPrime[multiple] = false;
             }
@@ -24,6 +28,8 @@ void sieveOfEratosthenes(int n) {
         }
     }
     printf("\n");
+
+    free(isPrime);
 }
 
 int main() {
